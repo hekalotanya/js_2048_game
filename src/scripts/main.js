@@ -112,6 +112,20 @@ const checkFreeMoveVertical = (matrix) => {
   return false;
 };
 
+const arrayCompare = (matrix1, matrix2) => {
+  for (let i = 0; i < 4; i++) {
+    for (let j = 0; j < 4; j++) {
+      if (matrix1[i][j] !== matrix2[i][j]) {
+        return false;
+      } else {
+        continue;
+      }
+    }
+  }
+
+  return true;
+};
+
 startButton.addEventListener('click', () => {
   if (startButton.classList.contains('restart')) {
     messageLose.classList.add('hidden');
@@ -144,6 +158,15 @@ startButton.addEventListener('click', () => {
 });
 
 document.addEventListener('keyup', (e) => {
+  const copyArrayCells
+    = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
+
+  for (let i = 0; i < 4; i++) {
+    for (let j = 0; j < 4; j++) {
+      copyArrayCells[i][j] = arrayOfCells[i][j];
+    }
+  }
+
   if (!messageWin.classList.contains('hidden')) {
     return;
   }
@@ -204,6 +227,7 @@ document.addEventListener('keyup', (e) => {
             score += arrayOfCells[i][j - 1];
           }
         }
+
         break;
 
       case 39:
@@ -244,6 +268,10 @@ document.addEventListener('keyup', (e) => {
           if (checkFreeMoveVertical(arrayOfCells) === false) {
             return;
           }
+        }
+
+        if (checkFreeMoveVertical(arrayOfCells) === false) {
+          return;
         }
 
         for (let j = 2; j > -1; j--) {
@@ -315,6 +343,11 @@ document.addEventListener('keyup', (e) => {
     }
   }
   refreshCells();
+
+  if (arrayCompare(copyArrayCells, arrayOfCells) === true) {
+    return;
+  }
+
   setRandomCells();
   refreshCells();
 });
