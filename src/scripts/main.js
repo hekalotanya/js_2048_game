@@ -130,6 +130,7 @@ startButton.addEventListener('click', () => {
   if (startButton.classList.contains('restart')) {
     messageLose.classList.add('hidden');
     messageWin.classList.add('hidden');
+    score = 0;
 
     arrayOfCells.map(row => {
       for (let i = 0; i < row.length; i++) {
